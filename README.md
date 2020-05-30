@@ -35,6 +35,7 @@
     * [<variadic/size_of.hpp>](#variadicsize_ofhpp)
         * [VDC_SIZE_OF](#vdc_size_of)
     * [<variadic/comma_if.hpp>](#variadiccomma_ifhpp)
+        * [VDC_COMMA_IF](#vdc_comma_if)
     * [<variadic/version.hpp>](#variadicversionhpp)
         * [VDC_MAJOR](#vdc_major)
         * [VDC_MINOR](#vdc_minor)
