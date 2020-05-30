@@ -11,6 +11,7 @@
 #define VARIADIC_HPP
 
 #include <variadic/cat.hpp>
+#include <variadic/comma_if.hpp>
 #include <variadic/core.hpp>
 #include <variadic/expand.hpp>
 #include <variadic/param_set.hpp>

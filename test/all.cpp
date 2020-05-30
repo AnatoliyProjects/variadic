@@ -264,6 +264,98 @@ BOOST_AUTO_TEST_SUITE_END() /* VDC_SIZE_OF */
 
 
 
+/* VDC_COMMA_IF */
+BOOST_TEST_DECORATOR(
+    * boost::unit_test::description(
+    "testing VDC_COMMA_IF(targets, params) "
+    "from <variadic/comma_if.hpp>")
+    * boost::unit_test::depends_on("size_of"))
+BOOST_AUTO_TEST_SUITE(comma_if)
+
+// Suite fixture setup
+#define EMPTY_SEQ
+#define SEQ \
+    VDC_MAKE_PARAM_SET(TYPE_PARAM, TEMPLATE_PARAM, TYPE_PARAM)
+
+/*1*/
+BOOST_AUTO_TEST_CASE(empty_test,
+    * boost::unit_test::label("empty")
+    * boost::unit_test::description(
+    "'params' == {}"))
+{
+    #define IN (VDC_COMMA_IF(VDC_ANY_PARAM, EMPTY_SEQ))
+    BOOST_TEST(STR(IN) == "()");
+    #undef IN
+};
+
+/*2*/
+BOOST_AUTO_TEST_CASE(any_target_test,
+    * boost::unit_test::description(
+    "'targets' == VDC_ANY_PARAM"))
+{
+    #define IN (VDC_COMMA_IF(VDC_ANY_PARAM, SEQ))
+    BOOST_TEST(STR(IN) == "(,)");
+    #undef IN
+};
+
+/*3*/
+BOOST_AUTO_TEST_CASE(type_target_test,
+    * boost::unit_test::description(
+    "'targets' == TYPE_PARAM"))
+{
+    #define IN (VDC_COMMA_IF(TYPE_PARAM, SEQ))
+    BOOST_TEST(STR(IN) == "(,)");
+    #undef IN
+};
+
+/*4*/
+BOOST_AUTO_TEST_CASE(template_target_test,
+    * boost::unit_test::description(
+    "'targets' == TEMPLATE_PARAM"))
+{
+    #define IN (VDC_COMMA_IF(TEMPLATE_PARAM, SEQ))
+    BOOST_TEST(STR(IN) == "(,)");
+    #undef IN
+};
+
+/*5*/
+BOOST_AUTO_TEST_CASE(mock_target_test,
+    * boost::unit_test::description(
+    "'targets' == VDC_DETAIL_MOCK_PARAM"))
+{
+    #define IN (VDC_COMMA_IF(VDC_DETAIL_MOCK_PARAM, SEQ))
+    BOOST_TEST(STR(IN) == "()");
+    #undef IN
+};
+
+/*6*/
+BOOST_AUTO_TEST_CASE(unary_tuple_target_test,
+    * boost::unit_test::description(
+    "'targets' == (TYPE_PARAM)"))
+{
+    #define IN (VDC_COMMA_IF((TYPE_PARAM), SEQ))
+    BOOST_TEST(STR(IN) == "(,)");
+    #undef IN
+};
+
+/*7*/
+BOOST_AUTO_TEST_CASE(binary_tuple_target_test,
+    * boost::unit_test::description(
+    "'targets' == (TYPE_PARAM, TEMPLATE_PARAM)"))
+{
+    #define IN (VDC_COMMA_IF((TYPE_PARAM, TEMPLATE_PARAM), SEQ))
+    BOOST_TEST(STR(IN) == "(,)");
+    #undef IN
+};
+
+// Suite fixture cleanup
+#undef EMPTY_SEQ
+#undef SEQ
+
+BOOST_AUTO_TEST_SUITE_END() /* VDC_SIZE_OF */
+
+
+
 /* VDC_EXPAND */
 BOOST_TEST_DECORATOR(
     * boost::unit_test::description(

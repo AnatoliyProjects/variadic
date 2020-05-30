@@ -34,6 +34,7 @@
         * [VDC_CAT](#vdc_cat)
     * [<variadic/size_of.hpp>](#variadicsize_ofhpp)
         * [VDC_SIZE_OF](#vdc_size_of)
+    * [<variadic/comma_if.hpp>](#variadiccomma_ifhpp)
     * [<variadic/version.hpp>](#variadicversionhpp)
         * [VDC_MAJOR](#vdc_major)
         * [VDC_MINOR](#vdc_minor)
@@ -1099,6 +1100,62 @@ Usable for conditional code generation in `HANDLER` user-defined macro.
     template< \
         int N \
         BOOST_PP_COMMA_IF( VDC_SIZE_OF(VDC_ANY_PARAM, params) ) \
+        VDC_EXPAND(params, VDC_ANY_PARAM, VDC_TOKEN(typename T, VDC_ABS_POS)) > \
+    void fn();
+
+VDC_PARAM_LIST(PARAM_SET, MAX_ARITY, HANDLER) // ->
+// template< int N , typename T0 > void fn();
+// template< int N , typename T0, typename T1 > void fn();
+
+VDC_EMPTY(HANDLER) //-> template< int N > void fn();
+```
+
+## *<variadic/comma_if.hpp>* ##
+
+### VDC_COMMA_IF ###
+
+```cpp
+#define VDC_COMMA_IF(targets, params)  
+```
+#### Description ####
+
+Filters input parameter list by  `targets` and past comma if result is not empty.
+
+#### Parameters ####
+
+| parameter | description |
+|:------------------:|:---------------------------------------------------------------------------|
+| targets | user-defined parameter as unary target, `VDC_ANY_PARAM` constant for any, or tuple for multiple targets (for example, `(TYPE, BOOL)` for user-defined `TYPE` and `BOOL`  parameters) |
+| params | parameter list for code generation produced by `VDC_PARAM_LIST` or `VDC_EMPTY` |
+
+#### Remarks ####
+
+Usable for conditional code generation in `HANDLER` user-defined macro.
+
+#### Header ####
+
+*<variadic/comma_if.hpp>*
+
+#### Sample code ####
+
+```cpp
+/* variadic */
+#include <variadic/param_set.hpp>
+#include <variadic/core.hpp>
+#include <variadic/token.hpp>
+#include <variadic/expand.hpp>
+#include <variadic/comma_if.hpp>
+
+#define TYPE 0 //type param (typename T)
+#define PARAM_SET VDC_MAKE_PARAM_SET(TYPE) //-> {TYPE}
+
+#define MAX_ARITY 2
+
+// overloading function template
+#define HANDLER(r, params) \
+    template< \
+        int N \
+        VDC_COMMA_IF(VDC_ANY_PARAM, params) \
         VDC_EXPAND(params, VDC_ANY_PARAM, VDC_TOKEN(typename T, VDC_ABS_POS)) > \
     void fn();
 
