@@ -1,5 +1,5 @@
-Template parameter representation / parameter representation / representation
-:  unique integral constant defined as macro
+*Template parameter representation / parameter representation / representation*
+> unique integral constant defined as macro
 
 # Table of contents #
 1. [What is Variadic?](#what-is-variadic)
